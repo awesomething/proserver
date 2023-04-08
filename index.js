@@ -3,28 +3,29 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path'
+import serverless from 'serverless-http'
+//import path from 'path'
 
 import postRoutes from './routes/posts.js';
 import userRouter from "./routes/user.js";
 
 const app = express(); 
 dotenv.config();
-const __dirname = path.resolve();
+//const __dirname = path.resolve();
 // app.get('/', (req,res)=>{
 //   res.send('Hello')
 // })
 
-app.get('/', (req,res)=>{
-  res.sendFile(path.join(__dirname, '../client/build/index.html'))
-})
+// app.get('/', (req,res)=>{
+//   res.sendFile(path.join(__dirname, '../client/build/index.html'))
+// })
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
 app.use('/posts', postRoutes);
 app.use("/user", userRouter);
-app.use(express.static(path.join(__dirname, '../client/build')))
+//app.use(express.static(path.join(__dirname, '../client/build')))
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true},
   () => {console.log('connected to : ', process.env.MONGO_URI)}
@@ -42,6 +43,6 @@ app.listen(PORT, () =>{
   console.log('LISTENING ON SERVER', PORT)
 })
 
-app.get('*', (req,res)=>{
-  res.sendFile(path.join(__dirname, '../client/build/index.html'))
-})
+// app.get('*', (req,res)=>{
+//   res.sendFile(path.join(__dirname, '../client/build/index.html'))
+// })
